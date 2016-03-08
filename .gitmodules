@@ -1,0 +1,3 @@
+[submodule "php-emul"]
+	path = php-emul
+	url = http://github.com/abiusx/php-emul
