@@ -1,0 +1,219 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>PHP-Emulator::upload.php</title>
+
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="upload.css">
+<script src="../d3.v3.min.js" charset="utf-8"></script>
+<script src="../dagre-d3.js"></script>
+
+<!-- Pull in JQuery dependencies -->
+<link rel="stylesheet" href="tipsy.css">
+<script src="../jquery-1.9.1.min.js"></script>
+<script src="tipsy.js"></script>
+
+<h1>PHP-Emulator: Call graph for upload.php</h1>
+
+<svg width=900 height=600></svg>
+
+<script id="js">
+// Create a new directed graph
+var g = new dagreD3.graphlib.Graph().setGraph({});
+
+// States and transitions from RFC 793
+var states = {
+    N0: {
+    data: function() {
+		var table = document.createElement("table"),
+		tr = d3.select(table).append("tr");
+		tr.append("td").text("[1]");
+		tr.append("td").text("main()");
+		return table;
+	},
+    description: "Program start point",
+    style: "fill: #FE9A2E"
+  },
+  N1: {
+    data: "upload.php:\n" +
+             "[2]: $uploadOk = 1;\n" +
+             "[3]: $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION;\n" +
+             "[5]: if(isset($_POST[\"submit\"])) {",
+    description: "time: 15ms\n" +
+                        "number of calls: 20 times\n" +
+                        "true ratio: 15 percent\n" +
+                        "false ratio: 85 percent",
+    style: "fill: #F5A9BC"
+  },
+  N2: {
+    data: "upload.php:\n" +
+             "[8]: echo \"File is an image - \" . $check[\"mime\"] . \".\";\n" + 
+             "[9]: $uploadOk = 1;",
+    description: "true",
+    style: "fill: #DDDDDD"
+  },
+    N3: {
+    data: "upload.php:\n" +
+             "[11]: echo \"File is not an image.\";\n" +
+             "[12]: $uploadOk = 0;",
+    description: "false",
+    style: "fill: #DDDDDD"
+  },
+      N4: {
+    data: "upload.php:\n" +
+             "[16]: if (file_exists($target_file))",
+    description: "",
+    style: "fill: #F5A9BC"
+  },
+    N5: {
+    data: "upload.php:\n" +
+             "[21]: if ($_FILES[\"fileToUpload\"][\"size\"] > 500000)",
+    description: "",
+    style: "fill: #F5A9BC"
+  },
+      N6: {
+    data: "upload.php:\n" +
+             "[17]: echo \"Sorry, file already exists.\";\n" +
+             "[18]: $uploadOk = 0;",
+    description: "",
+    style: "fill: #DDDDDD"
+  },
+      N7: {
+    data: "upload.php:\n" +
+             "[26]: if($imageFileType != \"jpg\" && $imageFileType != \"png\" && $imageFileType != \"jpeg\" && $imageFileType != \"gif\" )",
+    description: "",
+    style: "fill: #F5A9BC"
+  },
+      N8: {
+    data: "upload.php:\n" +
+             "[28]: echo \"Sorry, only JPG, JPEG, PNG & GIF files are allowed.\";\n" +
+             "[29]: $uploadOk = 0;",
+    description: "",
+    style: "fill: #DDDDDD"
+  },
+      N9: {
+    data: "upload.php:\n" +
+             "[32]: if ($uploadOk == 0)",
+    description: "",
+    style: "fill: #F5A9BC"
+  },
+      N10: {
+    data: "upload.php:\n" +
+             "[36]: if (move_uploaded_file($_FILES[\"fileToUpload\"][\"tmp_name\"], $target_file))",
+    description: "",
+    style: "fill: #F5A9BC"
+  },
+      N11: {
+    data: "upload.php:\n" +
+             "[33]: echo \"Sorry, your file was not uploaded.\";",
+    description: "",
+    style: "fill: #DDDDDD"
+  },
+      N12: {
+    data: "upload.php:\n" +
+             "[37]: echo \"The file \". basename( $_FILES[\"fileToUpload\"][\"name\"]). \" has been uploaded.\";",
+    description: "",
+    style: "fill: #D0F5A9"
+  },
+      N13: {
+    data: "upload.php:\n" +
+             "[39]: echo \"Sorry, there was an error uploading your file.\";",
+    description: "",
+    style: "fill: #DDDDDD"
+  },
+    N14: {
+    data: "upload.php:\n" +
+             "[42]: end",
+    description: "This is the end of upload.php",
+    style: "fill: #FE9A2E"
+  },
+    N15: {  // in node abbas shomarash 15 nis, ja oftade bode dige shod 15
+    data: "upload.php:\n" +
+             "[22]: echo \"Sorry, your file is too large.\";\n" +
+             "[23]: $uploadOk = 0;",
+    description: "This is the end of upload.php",
+    style: "fill: #DDDDDD"
+  }
+};
+
+// Add states to the graph, set labels, and style
+Object.keys(states).forEach(function(state) {
+  var value = states[state];
+  value.label = states[state].data;
+  value.rx = value.ry = 5;
+  g.setNode(state, value);
+});
+
+
+// g.setNode("N0", {
+// 	label: function() {
+// 		var table = document.createElement("table"),
+// 		tr = d3.select(table).append("td");
+// 		tr.append("tr").text("A");
+// 		tr.append("tr").text("B");
+// 		return table;
+// 	},
+// 	padding: 0,
+// 	rx: 5,
+// 	ry: 5
+// });
+
+// Set up the edges
+g.setEdge("N0",     "N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N1",     "N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N1",     "N3",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N1",     "N3",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N1",     "N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N1",     "N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N2",     "N4",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N3",     "N4",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N6",     "N5",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N4",     "N5",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N4",     "N6",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N7",     "N8",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N7",     "N9",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N8",     "N9",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N9",     "N11",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N9",     "N10",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N10",     "N13",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("N10",     "N12",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("N11",     "N14",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N13",     "N14",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("N12",     "N14",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+
+// Create the renderer
+var render = new dagreD3.render();
+
+// Set up an SVG group so that we can translate the final graph.
+var svg = d3.select("svg"),
+    inner = svg.append("g");
+
+// Set up zoom support
+var zoom = d3.behavior.zoom().on("zoom", function() {
+    inner.attr("transform", "translate(" + d3.event.translate + ")" +
+                                "scale(" + d3.event.scale + ")");
+  });
+svg.call(zoom);
+
+// Simple function to style the tooltip for the given node.
+var styleTooltip = function(name, description) {
+  return "<p class='name'>" + name + "</p><p class='description'>" + description + "</p>";
+};
+
+// Run the renderer. This is what draws the final graph.
+render(inner, g);
+
+inner.selectAll("g.node")
+  .attr("title", function(v) { return styleTooltip(v, g.node(v).description) })
+  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); });
+
+// Center the graph
+var initialScale = 0.75;
+zoom
+  .translate([(svg.attr("width") - g.graph().width * initialScale) / 2, 20])
+  .scale(initialScale)
+  .event(svg);
+svg.attr('height', g.graph().height * initialScale + 40);
+</script>
+
+<script src="demo.js"></script>

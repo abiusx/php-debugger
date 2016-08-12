@@ -1,0 +1,641 @@
+<!doctype html>
+
+<meta charset="utf-8">
+<title>PHP-Emulator::pureCaptcha.php</title>
+
+<link rel="stylesheet" href="demo.css">
+<link rel="stylesheet" href="pureCaptcha.css">
+<script src="../d3.v3.min.js" charset="utf-8"></script>
+<script src="../dagre-d3.js"></script>
+
+<!-- Pull in JQuery dependencies -->
+<link rel="stylesheet" href="tipsy.css">
+<script src="../jquery-1.9.1.min.js"></script>
+<script src="tipsy.js"></script>
+
+<h1>PHP-Emulator: Call graph for pureCaptcha.php</h1>
+
+<svg width=1100 height=800></svg>
+
+
+
+
+<script id="js">
+// Create a new directed graph
+var g = new dagreD3.graphlib.Graph({compound:true}).setGraph({}).setDefaultEdgeLabel(function() { return {}; });
+
+// Declare your nodes here
+var graphNodes = {
+     __construct: {
+      data: "",
+      description: "",
+      style: ""
+  },
+   __construct_N0 : {
+      data: "pureCaptcha.php - __construct()\n" +
+             "[24]  $this->ascii=unserialize(gzuncompress(base64_decode(\n" +
+             "preg_replace('/\s+/', '', $this->ascii))));",
+      description: "Class Contrustor",
+      style: "fill: #F2F2F2"
+  },
+    randomText: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+    randomText_N0: {
+      data: "pureCaptcha.php - randomText($length=4)\n" +
+               "[34]  $res=\"\";",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    randomText_N1: {
+      data: "pureCaptcha.php\n" +
+               "[35]  for ($i=0;$i<$length;++$i)\n" +
+             "[36]  $res.=$this->chars[mt_rand(0,strlen($this->chars)-1)];",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    randomText_N2: {
+      data: "pureCaptcha.php\n" +
+                "[37]  return $res;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    asciiEntry: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+    asciiEntry_N0: {
+      data: "pureCaptcha.php - asciiEntry($char)\n" +
+               "[44]  for ($i=0;$i<strlen($this->chars);++$i)\n",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    asciiEntry_N1: {
+      data: "pureCaptcha.php - asciiEntry($char)\n" +
+               "[45]  if ($this->chars[$i]==$char)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    asciiEntry_N2: {
+      data: "pureCaptcha.php - asciiEntry($char)\n" +
+               "[45]  return $i;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },    
+  asciiEntry_N3: {
+      data: "pureCaptcha.php - asciiEntry($char)\n" +
+               "[46]  return -1;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  textBitmap_N0: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[55]  $width=$this->charWidth;\n" + 
+               "[56]  $height=$this->charHeight;\n" + 
+               "[57]  $result=array();\n" + 
+               "[58]  $baseY=$baseX=0;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N1: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[60]  for ($index=0;$index<strlen($text);++$index)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N2: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[62]  for ($j=0;$j<$height;++$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N3: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[64]  for ($i=0;$i<$width;++$i)\n" +
+               "[65]  $result[$baseY+$j][$baseX+$i]=\n" +
+               "[66]  1-$this->ascii[$this->asciiEntry($text[$index])][$j][$i];",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N4: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[67]  for ($i=0;$i<$spacing;++$i)\n" +
+              "[68]  $result[$baseY+$j][$baseX+$width+$i]=0;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N5: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[70]  $baseX+=$width+$spacing;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  textBitmap_N6: {
+      data: "pureCaptcha.php - textBitmap($text,$spacing=2)\n" +
+               "[72]  return $result;",
+      description: "",
+      style: "fill: #F2F2F2"
+    },
+  displayBitmap: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  displayBitmap_N0: {
+      data: "pureCaptcha.php - displayBitmap($bitmap)\n" +
+               "[79]  header(\"Content-Type: image/bmp\");\n" +
+               "[80]  echo $this->bitmap2bmp($bitmap);",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  bitmap2bmp_N0: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[93]  $width=count($bitmap[0]);\n" +
+               "[94]  $height=count($bitmap);\n" +
+               "[95]  $bytemap=$this->bitmap2bytemap($bitmap);\n" +
+               "[97]  $rowSize=floor(($width+31)/32)*4;\n" +
+               "[98]  $size=$rowSize*$height + 62;\n" +
+               "[100]  $data= \"BM\"\n" +
+               "[101]  $data.= (pack('V',$size));\n" +
+               "[102]  $data.= \"RRRR\";\n" +
+               "[103]  $data.= (pack('V',14+40+8));\n" +
+               "[107]  $data.= pack('V',40);\n" +
+               "[109]  $data.= (pack('V',$width));\n" +
+               "[110]  $data.= (pack('V',$height));\n" +
+               "[111]  $data.= (pack('v',1));\n" +
+               "[112]  $data.= (pack('v',1));\n" +
+               "[113]  $data.= (pack('V',0));\n" +
+               "[114]  $data.= (pack('V',0));\n" +
+               "[115]  $data.= (pack('V',11808));\n" +
+               "[116]  $data.= (pack('V',11808));\n" +
+               "[117]  $data.= (pack('V',0));\n" +
+               "[118]  $data.= (pack('V',0));\n" +
+               "[121]  $data.= (pack('V',0x00FFFFFF));\n" +
+               "[122]  $data.= (pack('V',0));",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N1: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[124]  for ($j=$height-1;$j>=0;--$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N2: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[125]  for ($i=0;$i<$rowSize/4;++$i)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N3: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[126]  for ($k=0;$k<4;++$k)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N4: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[127]  if (isset($bytemap[$j][$i*4+$k]))",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N5: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[128]  $data.= pack('C',$bytemap[$j][$i*4+$k]);",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N6: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[130]  $data.= pack('C',0);",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bmp_N7: {
+      data: "pureCaptcha.php - bitmap2bmp($bitmap)\n" +
+               "[131]  return $data;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  bitmap2bytemap_N0: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[139]  $width=count($bitmap[0]);\n" +
+               "[140]  $height=count($bitmap);\n" +
+               "[141]   $bytemap=array();",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N1: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[142]  for ($j=0;$j<$height;++$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N2: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[144]  for ($i=0;$i<$width/8;++$i)\n" +
+               "[146]  $bitstring=\"\";",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N3: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[147]  for ($k=0;$k<8;++$k)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N4: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[148]  if (isset($bitmap[$j][$i*8+$k]))",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N5: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[149]  $bitstring.=$bitmap[$j][$i*8+$k];",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N6: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[151]  $bitstring.=\"0\";",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N7: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[152]  $bytemap[$j][]=bindec($bitstring);",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  bitmap2bytemap_N8: {
+      data: "pureCaptcha.php - bitmap2bytemap($bitmap)\n" +
+               "[155]  return $bytemap;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+    rotateBitmap: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  rotateBitmap_N0: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[163]  $c=cos(deg2rad($degree));\n" +
+               "[164]  $s=sin(deg2rad($degree));\n" +
+              "[166]  $width=count($bitmap[0]);\n" +
+              "[167]  $height=count($bitmap);\n" +
+              "[168]  $newHeight=round(abs($width*$s)+abs($height*$c));\n" +
+              "[169]  $newWidth=round(abs($width*$c) + abs($height*$s))+1;\n" +
+              "[170]  $x0 = $width/2 - $c*$newWidth/2 - $s*$newHeight/2;\n" +
+              "[171]  $y0 = $height/2 - $c*$newHeight/2 + $s*$newWidth/2;\n" +
+              "[172]  $result=array_fill(0, $newHeight, array_fill(0, $newWidth, 0));",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  rotateBitmap_N1: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[173]  for ($j=0;$j<$newHeight;++$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  rotateBitmap_N2: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[174]  for ($i=1;$i<$newWidth;++$i)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  rotateBitmap_N3: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[176]  $y=(int)(-$s*$i+$c*$j+$y0);\n" +
+               "[177]  $x=(int)($c*$i+$s*$j+$x0);\n" +
+               "[178]  if (isset($bitmap[$y][$x]))",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  rotateBitmap_N4: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[179]  $result[$j][$i]=$bitmap[$y][$x];",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  rotateBitmap_N5: {
+      data: "pureCaptcha.php - rotateBitmap($bitmap, $degree)\n" +
+               "[181]  return $result;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  scaleBitmap: {
+          data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  scaleBitmap_N0: {
+      data: "pureCaptcha.php - scaleBitmap($bitmap,$scaleX,$scaleY)\n" +
+               "[188]  $width=count($bitmap[0]);\n" +
+               "[189]  $height=count($bitmap);\n" +
+               "[190] $newHeight=$height*$scaleY;\n" +
+               "[191]  $newWidth=$width*$scaleX;\n" +
+               "[192]  $result=array_fill(0, $newHeight, array_fill(0, $newWidth, 0));",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  scaleBitmap_N1: {
+      data: "pureCaptcha.php - scaleBitmap($bitmap,$scaleX,$scaleY)\n" +
+               "[193]  for ($j=0;$j<$newHeight;++$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  scaleBitmap_N2: {
+      data: "pureCaptcha.php - scaleBitmap($bitmap,$scaleX,$scaleY)\n" +
+               "[194]  for ($i=0;$i<$newWidth;++$i)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  scaleBitmap_N3: {
+      data: "pureCaptcha.php - scaleBitmap($bitmap,$scaleX,$scaleY)\n" +
+               "[195]  $result[$j][$i]=$bitmap[(int)($j/$scaleY)][(int)($i/$scaleX)];",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  scaleBitmap_N4: {
+      data: "pureCaptcha.php - scaleBitmap($bitmap,$scaleX,$scaleY)\n" +
+               "[197]  return $result;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  distort: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  distort_N0: {
+      data: "pureCaptcha.php - distort($bitmap,$noisePercent=5)\n" +
+               "[204]  for ($j=0;$j<count($bitmap);++$j)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  distort_N1: {
+      data: "pureCaptcha.php - distort($bitmap,$noisePercent=5)\n" +
+               "[205]  for ($i=0;$i<count($bitmap[0]);++$i)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  distort_N2: {
+      data: "pureCaptcha.php - distort($bitmap,$noisePercent=5)\n" +
+               "[206]  if (isset($bitmap[$j][$i]) && mt_rand()%100<$noisePercent)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  distort_N3: {
+      data: "pureCaptcha.php - distort($bitmap,$noisePercent=5)\n" +
+               "[207]  $bitmap[$j][$i]=1;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  distort_N4: {
+      data: "pureCaptcha.php - distort($bitmap,$noisePercent=5)\n" +
+               "[208]  return $bitmap;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  show: {
+      data: "",
+      description: "",
+      style: "fill: #FFFFFF"
+  },
+  show_N0: {
+      data: "pureCaptcha.php - show($distort=true,$scale=2.3)\n" +
+               "[216]  $captcha=$this->randomText();\n" +
+               "[217]  $bitmap=$this->textBitmap($captcha);\n" +
+               "[218]  $degree=mt_rand(2,4);\n" +
+               "[219]  if (mt_rand()%100<50)",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  show_N1: {
+      data: "pureCaptcha.php - show($distort=true,$scale=2.3)\n" +
+               "[220]  $degree=-$degree;",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  show_N2: {
+      data: "pureCaptcha.php - show($distort=true,$scale=2.3)\n" +
+               "[221]  $bitmap=$this->rotateBitmap($bitmap,$degree);\n" +
+               "[222]  $bitmap=$this->scaleBitmap($bitmap,$scale,$scale);\n" +
+               "[223]  if ($distort) $bitmap=$this->distort($bitmap);\n",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  show_N3: {
+      data: "pureCaptcha.php - show($distort=true,$scale=2.3)\n" +
+               "[224]  $this->displayBitmap($bitmap);",
+      description: "",
+      style: "fill: #F2F2F2"
+  },
+  show_N4: {
+      data: "pureCaptcha.php - show($distort=true,$scale=2.3)\n" +
+               "[225]  return $captcha;",
+      description: "",
+      style: "fill: #F2F2F2"
+  }
+};
+
+// Add graphNodes to the graph, set labels, and style
+Object.keys(graphNodes).forEach(function(state) {
+  var value = graphNodes[state];
+  value.label = graphNodes[state].data;
+  value.rx = value.ry = 5;
+  g.setNode(state, value);
+});
+
+// Set the parents to define which nodes belong to which cluster
+g.setParent('__construct_N0', '__construct');
+g.setParent('randomText_N0', 'randomText');
+g.setParent('randomText_N1', 'randomText');
+g.setParent('randomText_N2', 'randomText');
+g.setParent('textBitmap_N0', 'textBitmap');
+g.setParent('textBitmap_N1', 'textBitmap');
+g.setParent('textBitmap_N2', 'textBitmap');
+g.setParent('textBitmap_N3', 'textBitmap');
+g.setParent('textBitmap_N4', 'textBitmap');
+g.setParent('textBitmap_N5', 'textBitmap');
+g.setParent('textBitmap_N6', 'textBitmap');
+g.setParent('asciiEntry_N0', 'asciiEntry');
+g.setParent('asciiEntry_N1', 'asciiEntry');
+g.setParent('asciiEntry_N2', 'asciiEntry');
+g.setParent('asciiEntry_N3', 'asciiEntry');
+g.setParent('displayBitmap_N0', 'displayBitmap');
+g.setParent('bitmap2bmp_N0', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N1', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N2', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N3', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N4', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N5', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N6', 'bitmap2bmp');
+g.setParent('bitmap2bmp_N7', 'bitmap2bmp');
+g.setParent('bitmap2bytemap_N0', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N1', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N2', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N3', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N4', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N5', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N6', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N7', 'bitmap2bytemap');
+g.setParent('bitmap2bytemap_N8', 'bitmap2bytemap');
+g.setParent('rotateBitmap_N0', 'rotateBitmap');
+g.setParent('rotateBitmap_N1', 'rotateBitmap');
+g.setParent('rotateBitmap_N2', 'rotateBitmap');
+g.setParent('rotateBitmap_N3', 'rotateBitmap');
+g.setParent('rotateBitmap_N4', 'rotateBitmap');
+g.setParent('rotateBitmap_N5', 'rotateBitmap');
+g.setParent('scaleBitmap_N0', 'scaleBitmap');
+g.setParent('scaleBitmap_N1', 'scaleBitmap');
+g.setParent('scaleBitmap_N2', 'scaleBitmap');
+g.setParent('scaleBitmap_N3', 'scaleBitmap');
+g.setParent('scaleBitmap_N4', 'scaleBitmap');
+g.setParent('distort_N0', 'distort');
+g.setParent('distort_N1', 'distort');
+g.setParent('distort_N2', 'distort');
+g.setParent('distort_N3', 'distort');
+g.setParent('distort_N4', 'distort');
+g.setParent('show_N0', 'show');
+g.setParent('show_N1', 'show');
+g.setParent('show_N2', 'show');
+g.setParent('show_N3', 'show');
+g.setParent('show_N4', 'show');
+
+// Set up the edges
+//g.setEdge("N0",     "N1",     { labelType:"html", label:"A <span style='font-size:32px'>Big</span> <span style='color:red;'>HTML</span> Source!"});
+g.setEdge("randomText_N0",     "randomText_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("randomText_N1",     "randomText_N1",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("randomText_N1",     "randomText_N2",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("asciiEntry_N0",     "asciiEntry_N1",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("asciiEntry_N0",     "asciiEntry_N3",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("asciiEntry_N1",     "asciiEntry_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("asciiEntry_N1",     "asciiEntry_N0",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("textBitmap_N0",     "textBitmap_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("textBitmap_N1",     "textBitmap_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("textBitmap_N1",     "textBitmap_N6",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("textBitmap_N2",     "textBitmap_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("textBitmap_N2",     "textBitmap_N5",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("textBitmap_N3",     "textBitmap_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("textBitmap_N3",     "textBitmap_N4",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("textBitmap_N4",     "textBitmap_N4",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("textBitmap_N4",     "textBitmap_N2",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("textBitmap_N5",     "textBitmap_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bmp_N0",     "bitmap2bmp_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bmp_N1",     "bitmap2bmp_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bmp_N1",     "bitmap2bmp_N7",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bmp_N2",     "bitmap2bmp_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bmp_N2",     "bitmap2bmp_N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bmp_N3",     "bitmap2bmp_N4",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bmp_N3",     "bitmap2bmp_N2",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bmp_N4",     "bitmap2bmp_N5",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bmp_N4",     "bitmap2bmp_N6",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bmp_N5",     "bitmap2bmp_N3",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bmp_N6",     "bitmap2bmp_N3",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bytemap_N0",     "bitmap2bytemap_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bytemap_N1",     "bitmap2bytemap_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bytemap_N1",     "bitmap2bytemap_N8",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bytemap_N2",     "bitmap2bytemap_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bytemap_N2",     "bitmap2bytemap_N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bytemap_N3",     "bitmap2bytemap_N4",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bytemap_N3",     "bitmap2bytemap_N7",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bytemap_N4",     "bitmap2bytemap_N5",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("bitmap2bytemap_N4",     "bitmap2bytemap_N6",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("bitmap2bytemap_N7",     "bitmap2bytemap_N2",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bytemap_N5",     "bitmap2bytemap_N3",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bytemap_N6",     "bitmap2bytemap_N3",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("rotateBitmap_N0",     "rotateBitmap_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("rotateBitmap_N1",     "rotateBitmap_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("rotateBitmap_N1",     "rotateBitmap_N5",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("rotateBitmap_N2",     "rotateBitmap_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("rotateBitmap_N2",     "rotateBitmap_N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("rotateBitmap_N3",     "rotateBitmap_N4",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("rotateBitmap_N3",     "rotateBitmap_N2",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("rotateBitmap_N4",     "rotateBitmap_N2",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("scaleBitmap_N0",     "scaleBitmap_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("scaleBitmap_N1",     "scaleBitmap_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("scaleBitmap_N1",     "scaleBitmap_N4",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("scaleBitmap_N2",     "scaleBitmap_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("scaleBitmap_N2",     "scaleBitmap_N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("scaleBitmap_N3",     "scaleBitmap_N2",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("distort_N0",     "distort_N1",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("distort_N0",     "distort_N4",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("distort_N1",     "distort_N2",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("distort_N1",     "distort_N0",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("distort_N2",     "distort_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("distort_N2",     "distort_N1",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("distort_N3",     "distort_N1",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N0",     "show_N1",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("show_N0",     "show_N2",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("show_N1",     "show_N2",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N2",     "show_N3",     { label: "", style: "stroke: #2ECC40; stroke-width: 2px;", arrowheadStyle: "fill: #2ECC40"});
+g.setEdge("show_N2",     "show_N4",     { label: "", style: "stroke: #FF4136; stroke-width: 2px;", arrowheadStyle: "fill: #FF4136"});
+g.setEdge("show_N3",     "show_N4",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+
+g.setEdge("textBitmap_N3",     "asciiEntry_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("displayBitmap_N0",     "bitmap2bmp_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("bitmap2bmp_N0",     "bitmap2bytemap_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N0",     "randomText_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N0",     "textBitmap_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N2",     "rotateBitmap_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N2",     "scaleBitmap_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N2",     "distort_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+g.setEdge("show_N3",     "displayBitmap_N0",     { label: "", style: "stroke: #0074D9; stroke-width: 2px;", arrowheadStyle: "fill: #0074D9"});
+
+// Create the renderer
+var render = new dagreD3.render();
+
+// Set up an SVG group so that we can translate the final graph.
+var svg = d3.select("svg"),
+    inner = svg.append("g");
+
+// Set up zoom support
+var zoom = d3.behavior.zoom().on("zoom", function() {
+    inner.attr("transform", "translate(" + d3.event.translate + ")" +
+                                "scale(" + d3.event.scale + ")");
+  });
+svg.call(zoom);
+
+// Simple function to style the tooltip for the given node.
+var styleTooltip = function(name, description) {
+  return "<p class='name'>" + name + "</p><p class='description'>" + description + "</p>";
+};
+
+// Run the renderer. This is what draws the final graph.
+render(inner, g);
+
+inner.selectAll("g.node")
+  .attr("title", function(v) { return styleTooltip(v, g.node(v).description) })
+  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); });
+
+// Center the graph
+var initialScale = 0.75;
+zoom
+  .translate([(svg.attr("width") - g.graph().width * initialScale) / 2, 20])
+  .scale(initialScale)
+  .event(svg);
+svg.attr('height', g.graph().height * initialScale + 40);
+</script>
+
+<!--script src="demo.js"></script>
